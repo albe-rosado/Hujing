@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=hujing
+Exec=hujing
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

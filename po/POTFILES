@@ -1,0 +1,5 @@
+data/org.gnome.Hujing.desktop.in
+data/org.gnome.Hujing.appdata.xml.in
+data/org.gnome.Hujing.gschema.xml
+src/window.uisrc/main.vala
+src/window.vala
