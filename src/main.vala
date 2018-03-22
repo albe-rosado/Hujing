@@ -1,30 +1,43 @@
-/* main.vala
- *
- * Copyright 2018 Alberto Rosado
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+/*
+* Copyright (c) 2018
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public
+* License as published by the Free Software Foundation; either
+* version 2 of the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* General Public License for more details.
+*
+* You should have received a copy of the GNU General Public
+* License along with this program; if not, write to the
+* Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+* Boston, MA 02110-1301 USA
+*
+* Authored by: Alberto Rosado <alberosado7@gmail.com>
+*/
 
-int main (string[] args) {
-	var app = new Gtk.Application ("org.gnome.Hujing", ApplicationFlags.FLAGS_NONE);
-	app.activate.connect (() => {
-		var win = app.active_window;
-		if (win == null) {
-			win = new Hujing.Window (app);
-		}
-		win.present();
-	});
+using Gtk;
 
-	return app.run (args);
+public class Hujing.App : Gtk.Application {
+
+    private MainWindow? main_window;
+
+    construct {
+        application_id = "com.github.albe-rosado.Hujing";
+        flags = ApplicationFlags.FLAGS_NONE;
+    }
+
+    protected override void activate () {
+        main_window = new MainWindow ();
+        add_window(main_window);
+        main_window.show_all();
+    }
+
+    public static int main (string[] args) {
+        var app = new App ();
+        return app.run (args);
+    }
 }
