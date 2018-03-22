@@ -21,23 +21,11 @@
 
 using Gtk;
 
-public class Hujing.App : Gtk.Application {
+public class MainWindow : ApplicationWindow {
+	construct {
+		default_height = 580;
+		default_width = 460;
+		title = "Hello World";
 
-    private MainWindow? main_window;
-
-    construct {
-        application_id = "com.github.albe-rosado.Hujing";
-        flags = ApplicationFlags.FLAGS_NONE;
-    }
-
-    protected override void activate () {
-        main_window = new MainWindow ();
-        add_window(main_window);
-        main_window.show_all();
-    }
-
-    public static int main (string[] args) {
-        var app = new App ();
-        return app.run (args);
-    }
+	}
 }
