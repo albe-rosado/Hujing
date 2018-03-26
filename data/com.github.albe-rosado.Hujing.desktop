@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=hujing
-Exec=hujing
+Exec=com.github.com.albe-rosado.Hujing
 Terminal=false
 Type=Application
 Categories=GTK;
