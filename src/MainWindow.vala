@@ -22,10 +22,23 @@
 using Gtk;
 
 public class MainWindow : ApplicationWindow {
+
+	private HeaderBar header_bar;
+	private Granite.Widgets.Welcome welcome_widget;
+
 	construct {
+		// temp window attrs
 		default_height = 580;
 		default_width = 460;
-		title = "Hello World";
+
+		header_bar = new HeaderBar();
+		header_bar.set_title("Hujing");
+		header_bar.show_close_button = true;
+		set_titlebar(header_bar);
+
+		welcome_widget = new Granite.Widgets.Welcome("Install some flatpaks", "Drad and drop or open flatpakref files to begin");
+		add(welcome_widget);
+
 
 	}
 }
