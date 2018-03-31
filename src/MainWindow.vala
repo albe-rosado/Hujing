@@ -1,6 +1,4 @@
-/*
-* Copyright (c) 2018
-*
+/* * Copyright (c) 2018 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
 * License as published by the Free Software Foundation; either
@@ -21,15 +19,16 @@
 
 using Gtk;
 
-public class MainWindow : ApplicationWindow {
+public class Hujing.MainWindow : ApplicationWindow {
+
+	private const Gtk.TargetEntry[] DRAG_TARGETS = {{ "text/uri-list", 0, 0 }};
 
 	private HeaderBar header_bar;
 	private Granite.Widgets.Welcome welcome_widget;
+	private Button open_button;
 
 	construct {
-		// temp window attrs
-		default_height = 580;
-		default_width = 460;
+		set_size_request( 700, 600);
 
 		header_bar = new HeaderBar();
 		header_bar.set_title("Hujing");
@@ -39,6 +38,23 @@ public class MainWindow : ApplicationWindow {
 		welcome_widget = new Granite.Widgets.Welcome("Install some flatpaks", "Drad and drop or open flatpakref files to begin");
 		add(welcome_widget);
 
+		open_button = new Button.from_icon_name("document-open", IconSize.LARGE_TOOLBAR);
+		open_button.tooltip_text = "Open";
+		add(open_button);
 
+		// drag and drop
+		drag_dest_set (this, DestDefaults.MOTION | DestDefaults.DROP, DRAG_TARGETS, Gdk.DragAction.COPY);
+		drag_data_received.connect (on_drag_data_recieved);
 	}
+
+	private void on_drag_data_recieved (Gdk.DragContext drag_context,
+		int x, int y, Gtk.SelectionData data, uint info, uint time) {
+
+		FlatpakHandler.install_app (data.get_uris ());
+		drag_finish (drag_context, true, false, time);
+	}
+
+
+
+
 }

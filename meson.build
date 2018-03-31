@@ -8,6 +8,7 @@ project(
 sources = [
   'src/App.vala',
   'src/MainWindow.vala',
+  'src/FlatpakHandler.vala',
 ]
 
 deps = [
