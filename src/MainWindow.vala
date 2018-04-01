@@ -18,13 +18,14 @@
 */
 
 using Gtk;
+using Granite;
 
 public class MainWindow : ApplicationWindow {
 
 	private const Gtk.TargetEntry[] DRAG_TARGETS = {{ "text/uri-list", 0, 0 }};
 
 	private HeaderBar header_bar;
-	private Granite.Widgets.Welcome welcome_widget;
+	private Widgets.Welcome welcome_widget;
 
 	construct {
 		set_size_request( 700, 600);
@@ -35,7 +36,7 @@ public class MainWindow : ApplicationWindow {
 		set_titlebar(header_bar);
 
 
-		welcome_widget = new Granite.Widgets.Welcome("Install some flatpaks", "Drad and drop or open flatpakref files to begin");
+		welcome_widget = new Widgets.Welcome("Install some flatpaks", "Drad and drop or open flatpakref files to begin");
 		welcome_widget.append ("document-open", "Open", "Browse to apen a file");
 		add(welcome_widget);
 
@@ -51,7 +52,7 @@ public class MainWindow : ApplicationWindow {
 		int x, int y, Gtk.SelectionData data, uint info, uint time) {
 
 		drag_finish (drag_context, true, false, time);
-		Flatpak.install_app (data.get_uris () [0]);
+		Flatpak.install_bundle (data.get_uris () [0]);
 	}
 
 
@@ -81,7 +82,7 @@ public class MainWindow : ApplicationWindow {
 			if (response == ResponseType.ACCEPT) {
 				string file_uri = file_chooser.get_uri ();
 				file_chooser.destroy ();
-				Flatpak.install_app (file_uri);
+				Flatpak.install_bundle (file_uri);
 			}
 			else {
 				file_chooser.destroy ();
@@ -90,5 +91,6 @@ public class MainWindow : ApplicationWindow {
 
 		file_chooser.run ();
 	}
+
 
 }

@@ -21,86 +21,64 @@
 
 public class Flatpak {
 
-	private static bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
+	public static void install_bundle (string bundle_uri) {
 
-		try {
-			string line;
-			channel.read_line (out line, null, null);
-			stdout.printf ("%s \n" , line);
-		} catch (IOChannelError e) {
-			stdout.printf ("%s: IOChannelError: %s\n", stream_name, e.message);
-			return false;
-		} catch (ConvertError e) {
-			stdout.printf ("%s: ConvertError: %s\n", stream_name, e.message);
-			return false;
-		}
-		return true;
-	}
-
-	public static void list_apps () {
 		MainLoop loop = new MainLoop ();
-		try {
-			string[] spawn_args = {"flatpak", "list", "--app"};
-			string[] spawn_env = Environ.get ();
-			Pid child_pid;
 
-			int standard_input;
-			int standard_output;
-			int standard_error;
+		try {
+			string file_path = Filename.from_uri (bundle_uri, null);
+			string[] spawn_args = {"flatpak", "install", "-y", file_path};
+			Pid child_pid;
+			int std_error;
+			string error_text = null;
 
 			Process.spawn_async_with_pipes ("/",
 				spawn_args,
-				spawn_env,
+				null,
 				SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
 				null,
 				out child_pid,
-				out standard_input,
-				out standard_output,
-				out standard_error);
+				null,
+				null,
+				out std_error);
 
-			// stdout:
-			IOChannel output = new IOChannel.unix_new (standard_output);
-			output.add_watch (IOCondition.IN | IOCondition.HUP, (channel, condition) => {
-				return process_line (channel, condition, "stdout");
-			});
 
-			// stderr:
-			IOChannel error = new IOChannel.unix_new (standard_error);
+			// handle error message from terminal
+			IOChannel error = new IOChannel.unix_new (std_error);
 			error.add_watch (IOCondition.IN | IOCondition.HUP, (channel, condition) => {
-				return process_line (channel, condition, "stderr");
+				if (condition == IOCondition.HUP) {
+					stdout.printf ("The fd has been closed.\n");
+					return false;
+				}
+
+				try {
+					string line;
+					channel.read_line (out line, null, null);
+					error_text = string.join(error_text, line);
+					return true;
+				}
+				catch {
+					return false;
+				}
+
 			});
-
-			ChildWatch.add (child_pid, (pid, status) => {
-				// Triggered when the child indicated by child_pid exits
-				Process.close_pid (pid);
-				loop.quit ();
-			});
-
-			loop.run ();
-		}
-		catch (SpawnError e) {
-			stdout.printf ("Error: %s\n", e.message);
-		}
-	}
-
-	public static void install_app (string file_uri) {
-		MainLoop loop = new MainLoop ();
-
-		try {
-			string file_path = Filename.from_uri (file_uri, null);
-			string[] spawn_args = {"flatpak", "install", "-y", file_path};
-			Pid child_pid;
-
-			Process.spawn_async_with_pipes ("/",
-				spawn_args,
-				null,
-				SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
-				null,
-				out child_pid);
 
 			ChildWatch.add (child_pid, (pid, status) => {
 				// Triggered when the child indicated by child_pid exits
 				stdout.printf ("Installation process done with  pid: %d and status: %d \n", pid, status);
+
+				if (status > 0) {
+
+					Granite.MessageDialog error_message_dialog = new Granite.MessageDialog.with_image_from_icon_name (
+					"",
+					error_text,
+					"dialog-error"
+					);
+
+					error_message_dialog.run ();
+					error_message_dialog.destroy ();
+				}
+
 				Process.close_pid (pid);
 				loop.quit ();
 			});

@@ -23,21 +23,28 @@ using Gtk;
 
 public class App : Gtk.Application {
 
-    private MainWindow? main_window;
+	private MainWindow? main_window;
 
-    construct {
-        application_id = "com.github.albe-rosado.Hujing";
-        flags = ApplicationFlags.FLAGS_NONE;
-    }
+	construct {
+		application_id = "com.github.albe-rosado.Hujing";
+		flags = ApplicationFlags.HANDLES_OPEN;
+	}
 
-    protected override void activate () {
-        main_window = new MainWindow ();
-        add_window(main_window);
-        main_window.show_all();
-    }
+	public static int main (string[] args) {
+		App app = new App ();
+		return app.run (args);
+	}
 
-    public static int main (string[] args) {
-        App app = new App ();
-        return app.run (args);
-    }
+	public override void activate () {
+		main_window = new MainWindow ();
+		add_window(main_window);
+		main_window.show_all();
+	}
+
+	public override void open (File[] files, string hint) {
+		File bundle = files[0];
+		activate ();
+		Flatpak.install_bundle (bundle.get_uri ());
+	}
+
 }
