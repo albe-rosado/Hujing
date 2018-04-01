@@ -19,13 +19,12 @@
 
 using Gtk;
 
-public class Hujing.MainWindow : ApplicationWindow {
+public class MainWindow : ApplicationWindow {
 
 	private const Gtk.TargetEntry[] DRAG_TARGETS = {{ "text/uri-list", 0, 0 }};
 
 	private HeaderBar header_bar;
 	private Granite.Widgets.Welcome welcome_widget;
-	private Button open_button;
 
 	construct {
 		set_size_request( 700, 600);
@@ -35,12 +34,13 @@ public class Hujing.MainWindow : ApplicationWindow {
 		header_bar.show_close_button = true;
 		set_titlebar(header_bar);
 
+
 		welcome_widget = new Granite.Widgets.Welcome("Install some flatpaks", "Drad and drop or open flatpakref files to begin");
+		welcome_widget.append ("document-open", "Open", "Browse to apen a file");
 		add(welcome_widget);
 
-		open_button = new Button.from_icon_name("document-open", IconSize.LARGE_TOOLBAR);
-		open_button.tooltip_text = "Open";
-		add(open_button);
+		welcome_widget.activated.connect (show_open_file_diag);
+
 
 		// drag and drop
 		drag_dest_set (this, DestDefaults.MOTION | DestDefaults.DROP, DRAG_TARGETS, Gdk.DragAction.COPY);
@@ -50,11 +50,45 @@ public class Hujing.MainWindow : ApplicationWindow {
 	private void on_drag_data_recieved (Gdk.DragContext drag_context,
 		int x, int y, Gtk.SelectionData data, uint info, uint time) {
 
-		FlatpakHandler.install_app (data.get_uris ());
 		drag_finish (drag_context, true, false, time);
+		Flatpak.install_app (data.get_uris () [0]);
 	}
 
 
+	private void show_open_file_diag () {
+		FileChooserDialog file_chooser = new FileChooserDialog ("Select flatpakref files to install",
+										this,
+										FileChooserAction.OPEN,
+										"Cancel",
+										ResponseType.CLOSE,
+										"Open",
+										ResponseType.ACCEPT);
 
+		FileFilter flatpak_filter = new FileFilter ();
+		flatpak_filter.set_filter_name ("Flatpak bundles");
+		flatpak_filter.add_pattern ("*.flatpakref");
+
+		FileFilter all_files_filter = new FileFilter ();
+		all_files_filter.set_filter_name ("All files");
+		all_files_filter.add_pattern ("*");
+
+		file_chooser.add_filter (flatpak_filter);
+		file_chooser.add_filter (all_files_filter);
+
+		file_chooser.select_multiple = false;
+
+		file_chooser.response.connect ((response) => {
+			if (response == ResponseType.ACCEPT) {
+				string file_uri = file_chooser.get_uri ();
+				file_chooser.destroy ();
+				Flatpak.install_app (file_uri);
+			}
+			else {
+				file_chooser.destroy ();
+			}
+		});
+
+		file_chooser.run ();
+	}
 
 }

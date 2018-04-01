@@ -18,20 +18,15 @@
 */
 
 
-public class Hujing.FlatpakHandler {
 
-
+public class Flatpak {
 
 	private static bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
 
 		try {
 			string line;
 			channel.read_line (out line, null, null);
-
-			int name_end_pos = line.index_of_char ('/');
-			string app_name = line.slice (0, name_end_pos);
-
-			stdout.printf ("%s \n" ,app_name);
+			stdout.printf ("%s \n" , line);
 		} catch (IOChannelError e) {
 			stdout.printf ("%s: IOChannelError: %s\n", stream_name, e.message);
 			return false;
@@ -82,14 +77,41 @@ public class Hujing.FlatpakHandler {
 			});
 
 			loop.run ();
-		} catch (SpawnError e) {
+		}
+		catch (SpawnError e) {
 			stdout.printf ("Error: %s\n", e.message);
 		}
 	}
 
-	public static void install_app (string[] bundle_paths) {
-		for (int i = 0; i < bundle_paths.length; i++) {
-			stdout.printf ("%s \n", bundle_paths[i]);
+	public static void install_app (string file_uri) {
+		MainLoop loop = new MainLoop ();
+
+		try {
+			string file_path = Filename.from_uri (file_uri, null);
+			string[] spawn_args = {"flatpak", "install", "-y", file_path};
+			Pid child_pid;
+
+			Process.spawn_async_with_pipes ("/",
+				spawn_args,
+				null,
+				SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
+				null,
+				out child_pid);
+
+			ChildWatch.add (child_pid, (pid, status) => {
+				// Triggered when the child indicated by child_pid exits
+				stdout.printf ("Installation process done with  pid: %d and status: %d \n", pid, status);
+				Process.close_pid (pid);
+				loop.quit ();
+			});
+
+			loop.run ();
+		}
+		catch (SpawnError error) {
+			stdout.printf ("Error: %s \n", error.message);
+		}
+		catch (ConvertError error) {
+			stdout.printf ("Error: %s \n", error.message);
 		}
 	}
 

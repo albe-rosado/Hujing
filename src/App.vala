@@ -21,7 +21,7 @@
 
 using Gtk;
 
-public class Hujing.App : Gtk.Application {
+public class App : Gtk.Application {
 
     private MainWindow? main_window;
 
@@ -37,7 +37,7 @@ public class Hujing.App : Gtk.Application {
     }
 
     public static int main (string[] args) {
-        var app = new App ();
+        App app = new App ();
         return app.run (args);
     }
 }
