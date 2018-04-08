@@ -1,1 +1,1 @@
-i18n.gettext('Hujing', preset: 'glib')
+i18n.gettext('hujing', preset: 'glib')

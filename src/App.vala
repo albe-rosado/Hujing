@@ -26,7 +26,7 @@ public class App : Gtk.Application {
 	private MainWindow? main_window;
 
 	construct {
-		application_id = "com.github.albe-rosado.Hujing";
+		application_id = "com.github.albe-rosado.hujing";
 		flags = ApplicationFlags.HANDLES_OPEN;
 	}
 
