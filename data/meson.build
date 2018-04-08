@@ -39,7 +39,7 @@ appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test('Validate appstream file', appstream_util,
     args: ['validate', appstream_file]
-  )git
+  )
 endif
 
 install_data('com.github.albe-rosado.Hujing.gschema.xml',
