@@ -17,7 +17,7 @@ gnome = import('gnome')
 executable(
 	meson.project_name(),
 	sources,
-	vala_args: '--target-glib=2.50',
+	vala_args: '--target-glib=2.48',
 	dependencies: deps,
 	install: true,
 )
