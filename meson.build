@@ -5,7 +5,7 @@ project(
 	meson_version: '>= 0.40.0',
 )
 
-add_global_arguments('-DGETTEXT_PACKAGE="com.github.albe-rosado.Hujing"', language:'c')
+add_global_arguments('-DGETTEXT_PACKAGE="com.github.albe-rosado.hujing"', language:'c')
 
 
 i18n = import('i18n')
