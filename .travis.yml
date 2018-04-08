@@ -15,6 +15,12 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libstdc++-5-dev
+      - meson
+      - debhelper
+      - libgtk-3-dev
+      - valac
+      - libgranite-dev
+      - libpackagekit-glib2-dev
 
 cache:
   directories:
