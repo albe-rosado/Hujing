@@ -1,6 +1,4 @@
-/*
-* Copyright (c) 2018
-*
+/* * Copyright (c) 2018 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
 * License as published by the Free Software Foundation; either
@@ -21,35 +19,16 @@
 
 using Gtk;
 
-public class App : Gtk.Application {
 
-	private MainWindow? main_window;
+public class SpinnerView: Grid {
 
-	construct {
-		application_id = "com.github.albe-rosado.Hujing";
-		flags = ApplicationFlags.HANDLES_OPEN;
+	public SpinnerView () {
+		Spinner spinner = new Spinner ();
+		spinner.start ();
+
+		Grid spinner_grid = new Grid ();
+		spinner_grid.add (spinner);
+
+		add (spinner_grid);
 	}
-
-	public static int main (string[] args) {
-		App app = new App ();
-		return app.run (args);
-	}
-
-	public override void activate () {
-		if (main_window == null) {
-			main_window = new MainWindow ();
-			add_window(main_window);
-			main_window.show_all();
-		}
-		else {
-			main_window.present ();
-		}
-	}
-
-	public override void open (File[] files, string hint) {
-		File bundle = files[0];
-		activate ();
-		Flatpak.install_bundle (bundle.get_uri ());
-	}
-
 }

@@ -1,7 +1,8 @@
 [Desktop Entry]
-Name=hujing
+Name=Hujing
 Exec=com.github.com.albe-rosado.Hujing
+Icon=hujing
+Comment=Install flatpak files
 Terminal=false
 Type=Application
-Categories=GTK;
-StartupNotify=true
+Categories=GTK;GNOME;Utility;

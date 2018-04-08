@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 Alberto Rosado <alberosado7@gmail.com> -->
+<component type="desktop">
+  <id>com.github.albe-rosado.Hujing.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <name>Hujing</name>
+  <summary>Graphic installer for flatpak files</summary>
+  <description>
+    <p>Simple, easy to use flatpakref bundles installer.</p>
+  </description>
+  <releases>
+    <release version="0.1.0" date="2018-04-08" urgency="medium">
+      <description>
+        <ul>
+          <li>Initial release</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <developer_name>Alberto Rosado</developer_name>
+  <url type="homepage">https://github.com/albe-rosado/Hujing/</url>
+</component>

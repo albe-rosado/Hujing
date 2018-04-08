@@ -72,13 +72,20 @@ public class Flatpak {
 					Granite.MessageDialog error_message_dialog = new Granite.MessageDialog.with_image_from_icon_name (
 					"",
 					error_text,
-					"dialog-error"
-					);
+					"dialog-error");
 
 					error_message_dialog.run ();
 					error_message_dialog.destroy ();
 				}
+				else {
+					Granite.MessageDialog success_message_dialog = new Granite.MessageDialog.with_image_from_icon_name (
+					"Success",
+					"The application was successfully installed.",
+					"dialog-success");
 
+					success_message_dialog.run ();
+					success_message_dialog.destroy ();
+				}
 				Process.close_pid (pid);
 				loop.quit ();
 			});
