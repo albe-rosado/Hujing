@@ -12,8 +12,8 @@ foreach i : icon_sizes
 endforeach
 
 desktop_file = i18n.merge_file(
-  input: 'com.github.albe-rosado.Hujing.desktop.in',
-  output: 'com.github.albe-rosado.Hujing.desktop',
+  input: 'com.github.albe-rosado.hujing.desktop.in',
+  output: 'com.github.albe-rosado.hujing.desktop',
   type: 'desktop',
   po_dir: '../po',
   install: true,
@@ -28,8 +28,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-  input: 'com.github.albe-rosado.Hujing.appdata.xml.in',
-  output: 'com.github.albe-rosado.Hujing.appdata.xml',
+  input: 'com.github.albe-rosado.hujing.appdata.xml.in',
+  output: 'com.github.albe-rosado.hujing.appdata.xml',
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
@@ -42,7 +42,7 @@ if appstream_util.found()
   )
 endif
 
-install_data('com.github.albe-rosado.Hujing.gschema.xml',
+install_data('com.github.albe-rosado.hujing.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 
