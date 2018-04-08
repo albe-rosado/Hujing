@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Hujing
-Exec=com.github.com.albe-rosado.Hujing
+Exec=com.github.com.albe-rosado.hujing
 Icon=hujing
 Comment=Install flatpak files
 Terminal=false
