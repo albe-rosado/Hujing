@@ -1,4 +1,4 @@
-Source: com.github.albe-rosado.Hujing
+Source: com.github.albe-rosado.hujing
 Section: x11
 Priority: extra
 Maintainer: Alberto Rosado <alberosado7@github.com>
@@ -11,7 +11,7 @@ Build-Depends: meson (>= 2.8),
                libunity-dev
 Standards-Version: 3.9.3
 
-Package: com.github.albe-rosado.Hujing
+Package: com.github.albe-rosado.hujing
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Hujing
