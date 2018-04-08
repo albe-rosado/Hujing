@@ -15,7 +15,7 @@ deps = [
 gnome = import('gnome')
 
 executable(
-	'com.github.com.albe-rosado.hujing',
+	'com.github.albe-rosado.hujing',
 	sources,
 	vala_args: '--target-glib=2.50',
 	dependencies: deps,
