@@ -1,0 +1,10 @@
+Package: com.github.albe-rosado.hujing
+Version: 0.1.23
+Architecture: amd64
+Maintainer: Alberto Rosado <alberosado7@github.com>
+Installed-Size: 97
+Depends: dconf-gsettings-backend | gsettings-backend, libc6 (>= 2.4), libglib2.0-0 (>= 2.28.0), libgranite4 (>= 0.5), libgtk-3-0 (>= 3.9.12)
+Section: x11
+Priority: extra
+Description: Hujing
+ Simple flatpak packages installer
