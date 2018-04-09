@@ -71,7 +71,7 @@ We'd love to have your helping hand!
 
 ### ToDo
 
-- [ ] Provide `deb` and `rpm` bundles
+- [ ] Provide `deb`(done) and `rpm` bundles
 - [ ] Add "Open with" integration
 - [ ] Manage  installed apps (list, delete)
 - [ ] Multiple files install
