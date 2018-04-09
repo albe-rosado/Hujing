@@ -6,7 +6,7 @@ A very simple and easy to use GNOME application  for installing **flatpak** bund
 
 
 ## Installation
-
+Make sure you have Flatpak installed in your system. [Instructions](https://flatpak.org/setup/)
 ### Dependencies
 These dependencies must be present before building
  - `valac`
