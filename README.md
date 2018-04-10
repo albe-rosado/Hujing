@@ -32,11 +32,6 @@ We'd love to have your helping hand!
 - If something doesn’t work, please [file an issue](https://github.com/albe-rosado/Hujing/issues/new).
 - Be excellent to others.
 
-### ToDo
-
-- [ ] Provide `deb` and `rpm` bundles
-[![Build Status](https://travis-ci.org/albe-rosado/Hujing.svg?branch=master)](https://travis-ci.org/albe-rosado/Hujing)
-
 # Hujing
 
 A very simple and easy to use GNOME application  for installing **flatpak** bundles without having to use the terminal. Made with love for those who aren't necessarily "good with computers" and just want something simple and reliable to install their apps.
