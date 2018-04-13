@@ -10,6 +10,15 @@
     <p>Simple, easy to use flatpakref bundles installer.</p>
   </description>
   <releases>
+    <release version="0.1.25" date="2018-04-13" urgency="low">
+      <description>
+        <ul>
+          <li>Add 'Open With ...'</li>
+          <li>Add mimetypes support</li>
+          <li>Change to a better success icon on dialog</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.1.0" date="2018-04-08" urgency="medium">
       <description>
         <ul>
@@ -23,6 +32,10 @@
       <image>https://raw.githubusercontent.com/albe-rosado/Hujing/master/data/hujing-screenshot.png</image>
     </screenshot>
 </screenshots>
+<mimetypes>
+    <mimetype>application/vnd.flatpak.ref</mimetype>
+    <mimetype>application/vnd.flatpak</mimetype>
+</mimetypes>
   <developer_name>Alberto Rosado</developer_name>
   <url type="homepage">https://github.com/albe-rosado/Hujing/</url>
 </component>

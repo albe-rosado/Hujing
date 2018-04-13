@@ -64,10 +64,8 @@ public class MainWindow : ApplicationWindow {
 
 	private void on_drag_data_recieved (Gdk.DragContext drag_context,
 		int x, int y, Gtk.SelectionData data, uint info, uint time) {
-		stack.visible_child_name = SPINNER_VIEW;
 		drag_finish (drag_context, true, false, time);
-		Flatpak.install_bundle (data.get_uris () [0]);
-		stack.visible_child_name = WELCOME_VIEW;
+		open_file(data.get_uris () [0]);
 	}
 
 
@@ -97,17 +95,19 @@ public class MainWindow : ApplicationWindow {
 			if (response == ResponseType.ACCEPT) {
 				string file_uri = file_chooser.get_uri ();
 				file_chooser.destroy ();
-				Flatpak.install_bundle (file_uri);
-				stack.visible_child_name = WELCOME_VIEW;
+				open_file(file_uri);
 			}
 			else {
-				stack.visible_child_name = WELCOME_VIEW;
 				file_chooser.destroy ();
 			}
 		});
-		stack.visible_child_name = SPINNER_VIEW;
 		file_chooser.run ();
 	}
 
+	public void open_file (string file_path) {
+		stack.visible_child_name = SPINNER_VIEW;
+		Flatpak.install_bundle (file_path);
+		stack.visible_child_name = WELCOME_VIEW;
+	}
 
 }

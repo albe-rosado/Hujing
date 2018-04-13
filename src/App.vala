@@ -21,13 +21,23 @@
 
 using Gtk;
 
-public class App : Gtk.Application {
+public class App : Granite.Application {
 
 	private MainWindow? main_window;
+	private const string[] SUPPORTED_MIMETYPES = {"application/vnd.flatpak", "application/vnd.flatpak.repo", "application/vnd.flatpak.ref"};
+	private const string APP_NAME = "Hujing";
+	private const string APP_ID = "com.github.albe-rosado.hujing";
+	private const string EXEC_NAME = "hujing";
+	private const string DESKTOP_NAME = "com.github.albe-rosado.hujing.desktop";
+
 
 	construct {
-		application_id = "com.github.albe-rosado.hujing";
-		flags = ApplicationFlags.HANDLES_OPEN;
+		flags |= ApplicationFlags.HANDLES_OPEN;
+		application_id = APP_ID;
+		program_name = APP_NAME;
+		exec_name = EXEC_NAME;
+		app_launcher = DESKTOP_NAME;
+		register_app_handler ();
 	}
 
 	public static int main (string[] args) {
@@ -46,10 +56,28 @@ public class App : Gtk.Application {
 		}
 	}
 
+	private static void register_app_handler () {
+		DesktopAppInfo app_info = new DesktopAppInfo (DESKTOP_NAME);
+		if (app_info == null) {
+			debug ("Couldn't AppInfo for %s", APP_NAME);
+			return;
+		}
+		try {
+			app_info.set_as_default_for_extension("flatpakref");
+			app_info.set_as_default_for_type ("application/vnd.flatpak.ref");
+		}
+		catch (Error error) {
+			warning (error.message);
+		}
+	}
+
+
 	public override void open (File[] files, string hint) {
 		File bundle = files[0];
 		activate ();
-		Flatpak.install_bundle (bundle.get_uri ());
+		if (main_window != null) {
+			main_window.open_file(bundle.get_uri ());
+		}
 	}
 
 }

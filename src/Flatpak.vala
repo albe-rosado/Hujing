@@ -79,9 +79,9 @@ public class Flatpak {
 				}
 				else {
 					Granite.MessageDialog success_message_dialog = new Granite.MessageDialog.with_image_from_icon_name (
-					"Success",
+					"",
 					"The application was successfully installed.",
-					"dialog-success");
+					"dialog-ok");
 
 					success_message_dialog.run ();
 					success_message_dialog.destroy ();
