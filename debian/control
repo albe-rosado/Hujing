@@ -8,12 +8,11 @@ Build-Depends: meson,
                valac,
                libgranite-dev,
                libpackagekit-glib2-dev,
-               flatpak
+               libflatpak-dev
 Standards-Version: 3.9.3
 
 Package: com.github.albe-rosado.hujing
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: flatpak
 Description: Hujing
  Simple flatpak packages installer
