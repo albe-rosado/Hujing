@@ -25,8 +25,10 @@ public class MainWindow : ApplicationWindow {
 	private const Gtk.TargetEntry[] DRAG_TARGETS = {{ "text/uri-list", 0, 0 }};
 	private const string WELCOME_VIEW = "welcome-view";
 	private Widgets.Welcome welcome_view;
-	private const string SPINNER_VIEW = "spinner-view";
-	private SpinnerView spinner_view;
+	private const string PROGRESS_VIEW = "progress-view";
+	private const string FLATPAK_PROGRESS_VIEW = "flatpak-progress-view";
+	private ProgressView progress_view;
+	private FlatpakProgressView flatpak_progress_view;
 	private HeaderBar header_bar;
 	private Stack stack;
 
@@ -41,24 +43,27 @@ public class MainWindow : ApplicationWindow {
 		header_bar.show_close_button = true;
 		set_titlebar(header_bar);
 
-		spinner_view = new SpinnerView ();
-		spinner_view.halign = Align.CENTER;
-		spinner_view.valign = Align.CENTER;
+		progress_view = new ProgressView ();
+		progress_view.halign = Align.CENTER;
+		progress_view.valign = Align.CENTER;
+
+		flatpak_progress_view = new FlatpakProgressView ();
+		flatpak_progress_view.halign = Align.CENTER;
+		flatpak_progress_view.valign = Align.CENTER;
 
 		welcome_view = new Widgets.Welcome ("Install some flatpak apps", "Drad and drop or open flatpakref files to begin");
 		welcome_view.append ("document-open", "Open", "Browse to apen a file");
 		welcome_view.activated.connect (show_open_file_diag);
 
-
 		stack.add_named (welcome_view, WELCOME_VIEW);
-		stack.add_named (spinner_view, SPINNER_VIEW);
+		stack.add_named (progress_view, PROGRESS_VIEW);
+		stack.add_named (flatpak_progress_view, FLATPAK_PROGRESS_VIEW);
+
 
 		add(stack);
 
-		// drag and drop
 		drag_dest_set (this, DestDefaults.MOTION | DestDefaults.DROP, DRAG_TARGETS, Gdk.DragAction.COPY);
 		drag_data_received.connect (on_drag_data_recieved);
-
 	}
 
 
@@ -105,9 +110,16 @@ public class MainWindow : ApplicationWindow {
 	}
 
 	public void open_file (string file_path) {
-		stack.visible_child_name = SPINNER_VIEW;
+		if (! Flatpak.flatpak_installed ()) {
+			stack.visible_child_name = FLATPAK_PROGRESS_VIEW;
+			Flatpak.install_flatpak ();
+		}
+		stack.visible_child_name = PROGRESS_VIEW;
 		Flatpak.install_bundle (file_path);
 		stack.visible_child_name = WELCOME_VIEW;
 	}
+
+
+
 
 }

@@ -7,8 +7,7 @@ Build-Depends: meson,
                libgtk-3-dev,
                valac,
                libgranite-dev,
-               libpackagekit-glib2-dev,
-               libflatpak-dev
+               libpackagekit-glib2-dev
 Standards-Version: 3.9.3
 
 Package: com.github.albe-rosado.hujing

@@ -59,7 +59,7 @@ public class App : Granite.Application {
 	private static void register_app_handler () {
 		DesktopAppInfo app_info = new DesktopAppInfo (DESKTOP_NAME);
 		if (app_info == null) {
-			debug ("Couldn't AppInfo for %s", APP_NAME);
+			debug ("Couldn't get AppInfo for %s", APP_NAME);
 			return;
 		}
 		try {

@@ -2,7 +2,8 @@ sources = [
 	'App.vala',
 	'MainWindow.vala',
 	'Flatpak.vala',
-	'SpinnerView.vala',
+	'ProgressView.vala',
+	'FlatpakProgressView.vala',
 ]
 
 deps = [

@@ -20,15 +20,21 @@
 using Gtk;
 
 
-public class SpinnerView: Grid {
+public class FlatpakProgressView: Grid {
 
-	public SpinnerView () {
+	public FlatpakProgressView () {
+		Grid spinner_grid = new Grid ();
+
 		Spinner spinner = new Spinner ();
 		spinner.start ();
 
-		Grid spinner_grid = new Grid ();
-		spinner_grid.add (spinner);
+		Label message = new Label ("<i>Looks like you dont have Flatpak in your system, please wait while we install it for you...</i>");
+		message.set_use_markup (true);
 
+		spinner_grid.halign = Align.CENTER;
+		spinner_grid.orientation = Orientation.VERTICAL;
+		spinner_grid.add (spinner);
+		spinner_grid.add (message);
 		add (spinner_grid);
 	}
 }
