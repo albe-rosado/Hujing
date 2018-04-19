@@ -1,3 +1,9 @@
+com.github.albe-rosado.hujing (0.1.28) precise; urgency=low
+
+  * Add Flatpak as dep
+  
+ -- Alberto Rosado <alberosado7@gmail.com>  Fri, 13 Apr 2018 19:10:39 -0500
+
 com.github.albe-rosado.hujing (0.1.26) precise; urgency=low
 
   * Add 'Open With ...'
