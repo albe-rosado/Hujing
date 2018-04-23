@@ -3,8 +3,10 @@
 
 # Hujing
 
-A very simple and easy to use GNOME application  for installing **flatpak** bundles without having to use the terminal. Made with love for those who aren't necessarily "good with computers" and just want something simple and reliable to install their apps.
+A very simple and easy to use GNOME application  for installing **flatpak** applications without having to use the terminal. Made with love for those who aren't necessarily "good with computers" and just want something simple and reliable to install their apps.
 
+### Download
+Download Hujing packages for your distro from the [release page](https://github.com/albe-rosado/Hujing/releases/latest). Currently only packages for Debian/Ubuntu based distros are available.
 
 ## Installation
 
